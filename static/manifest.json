@@ -1,0 +1,17 @@
+{
+	"short_name": "Expenses",
+	"name": "Notion Expenses PWA",
+	"icons": [
+		{
+			"src": "/favicon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any maskable"
+		}
+	],
+	"start_url": "/",
+	"background_color": "#ca9ee6",
+	"theme_color": "#ca9ee6",
+	"display": "standalone",
+	"orientation": "portrait"
+}
