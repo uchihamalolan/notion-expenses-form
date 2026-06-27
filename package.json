@@ -13,7 +13,8 @@
 		"lint": "biome lint",
 		"fmt": "biome format --write",
 		"check": "biome check",
-		"fix": "biome check --write"
+		"fix": "biome check --write",
+		"check:all": "bun check & bun typecheck & bun sveltecheck"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.1",
