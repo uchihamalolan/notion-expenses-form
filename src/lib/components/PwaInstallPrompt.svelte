@@ -9,33 +9,39 @@ let { show = $bindable() }: Props = $props();
 </script>
 
 {#if show}
-	<div
-		class="fixed bottom-0 left-0 right-0 p-4 bg-base-100 border-t border-base-300 shadow-2xl z-40 flex flex-col gap-3 animate-slide-up sm:max-w-md sm:mx-auto sm:rounded-t-2xl sm:bottom-0"
+	<aside
+		class="fixed bottom-0 left-0 right-0 p-4 bg-base-100 border-t border-base-300 shadow-2xl z-40 flex flex-col gap-3 animate-slide-up sm:max-w-md sm:mx-auto sm:rounded-t-box sm:bottom-0"
 	>
-		<div class="flex justify-between items-start">
+		<header class="flex justify-between items-start">
 			<div class="flex gap-3 items-center">
-				<div
-					class="w-10 h-10 rounded-xl bg-primary text-primary-content flex items-center justify-center shadow"
+				<span
+					class="w-10 h-10 rounded-[var(--rounded-btn)] bg-primary text-primary-content flex items-center justify-center font-bold text-xl"
+					aria-hidden="true"
 				>
-					<span class="font-bold text-xl">₹</span>
-				</div>
+					₹
+				</span>
 				<div>
-					<h3 class="font-bold text-sm">Install Expenses Tracker</h3>
+					<h2 class="font-bold text-sm">Install Expenses Tracker</h2>
 					<p class="text-xs text-base-content/60">Add this PWA to your iPhone Home Screen.</p>
 				</div>
 			</div>
-			<button type="button" onclick={() => show = false} class="btn btn-ghost btn-xs btn-circle">
+			<button
+				type="button"
+				onclick={() => (show = false)}
+				class="btn btn-ghost btn-xs btn-circle"
+				aria-label="Close install prompt"
+			>
 				✕
 			</button>
-		</div>
-		<div
-			class="text-xs text-base-content/80 flex items-center flex-wrap gap-1 leading-relaxed bg-base-200 p-3 rounded-xl"
+		</header>
+		<p
+			class="text-xs text-base-content/80 flex items-center flex-wrap gap-1 leading-relaxed bg-base-200 p-3 rounded-box"
 		>
 			<span>Tap the share button</span>
 			<Icon name="share" class="w-4 h-4 text-primary inline mx-1" />
 			<span>in Safari, then select</span>
-			<span class="font-bold text-primary">"Add to Home Screen"</span>
+			<strong class="text-primary font-bold">"Add to Home Screen"</strong>
 			<span>from the menu list.</span>
-		</div>
-	</div>
+		</p>
+	</aside>
 {/if}

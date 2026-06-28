@@ -20,13 +20,12 @@ export class ExpenseFormState {
 		const offset = today.getTimezoneOffset();
 		const localToday = new Date(today.getTime() - offset * 60 * 1000);
 		this.date = localToday.toISOString().split("T")[0];
-		this.fetchSchema();
 	}
 
 	async fetchSchema() {
 		try {
 			this.loading = true;
-			const res = await fetch("/api/notion/schema");
+			const res = await fetch("/api/notion/expense/schema");
 			if (!res.ok) throw new Error("Failed to load options from Notion");
 			const data = await res.json();
 			this.availableCategories = data.categories.sort();

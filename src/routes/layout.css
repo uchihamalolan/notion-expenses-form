@@ -1,4 +1,20 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
-@plugin "daisyui";
+
+@plugin "daisyui" {
+	themes:
+		fantasy --default,
+		dracula --prefersdark;
+}
+
+/* Hide default browser spin buttons (up/down arrows) on number inputs */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+input[type="number"] {
+	appearance: textfield;
+	-moz-appearance: textfield;
+}

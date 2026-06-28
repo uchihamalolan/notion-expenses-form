@@ -34,6 +34,21 @@ This workspace contains a Svelte 5 / SvelteKit project for a Notion Expense Trac
 - Always run static type checks and framework checks before considering a task complete.
 - Execute `bun run check:all` to run Bun checks, TypeScript type check (`tsc --noEmit`), and Svelte checks (`svelte-check`). All checks must pass with zero errors.
 
+### 5. Personal Coding & Design Guidelines
+- **Strict Theme Respect:** Do not override active theme attributes (colors, text weights, hover behaviors) with custom Tailwind utility overrides. Let the active theme resolve color and contrast natively.
+- **Themed Geometry:** Use native themed border-radius tokens (`rounded-box`, `rounded-[var(--rounded-btn)]`) instead of hardcoded utility classes (`rounded-2xl`, `rounded-3xl`) to prevent visual mismatches when toggling themes.
+- **Layout & HTML Minimalism:** Consolidate styles and eliminate redundant wrapper divs. If an element's only child is the content wrapper, apply layout and padding directly to the parent tag to keep the DOM hierarchy flat.
+- **Semantic Tagging:** Prioritize semantic HTML5 elements over generic `div` containers:
+  - `<aside>` for floating overlay alerts, modal prompts, and toast notifications.
+  - `<output>` for dynamic form responses and status messages.
+  - `<search>` for input elements that filter or select items.
+  - `<main>` and `<section>` for layout landmarks, pages, and cards.
+  - `<ul>` and `<li>` for lists, options menus, and badge grids.
+  - `<strong>` instead of styled spans for bold typographic emphasis.
+  - `<button type="button">` with an `aria-label` for interactive overlay backdrops that dismiss menus.
+- **Zero Inline SVGs:** Individual Svelte components must never contain inline SVG elements. Register all SVG paths in [Icon.svelte](file:///Users/malolan/Projects/notion-expenses-form/src/lib/components/Icon.svelte) and reference them using `<Icon name="..." />`.
+- **Accessibility (a11y):** Visually hide necessary structural labels using `sr-only` rather than omitting them entirely, ensuring complete screen-reader compatibility without affecting the visual design.
+
 ---
 
 ## Available Svelte MCP Tools

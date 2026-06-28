@@ -34,63 +34,49 @@ function handleCreatePayee() {
 }
 </script>
 
-<div class="form-control w-full relative">
-	<label class="label py-1" for="payee">
-		<span class="label-text font-semibold text-xs opacity-75">PAYEE / MERCHANT</span>
-	</label>
-	<div class="join w-full">
+<fieldset class="fieldset relative">
+	<legend class="fieldset-legend">PAYEE / MERCHANT</legend>
+	<!-- <search> is the HTML5 semantic landmark for search/filter UI -->
+	<search class="join w-full">
 		<input
 			id="payee"
 			type="text"
 			placeholder="Search or type a payee..."
 			bind:value={payeeSearch}
-			onfocus={() => payeeDropdownOpen = true}
-			class="input input-bordered join-item w-full focus:input-primary"
+			onfocus={() => (payeeDropdownOpen = true)}
+			class="input input-lg join-item w-full"
 			autocomplete="off"
 		>
 		{#if payeeSearch && !availablePayees.includes(payeeSearch)}
-			<button
-				type="button"
-				onclick={handleCreatePayee}
-				class="btn btn-primary join-item px-3"
-				title="Add new payee"
-			>
+			<button type="button" onclick={handleCreatePayee} class="btn btn-primary btn-lg join-item">
 				+ New
 			</button>
 		{/if}
-	</div>
+	</search>
 
 	<!-- Combobox Dropdown -->
 	{#if payeeDropdownOpen && filteredPayees.length > 0}
-		<div
-			class="absolute z-20 left-0 right-0 top-full mt-1 max-h-48 overflow-y-auto bg-base-200 border border-base-300 rounded-lg shadow-lg"
+		<ul
+			class="menu menu-sm bg-base-200 absolute z-20 w-full top-full mt-1 max-h-48 overflow-y-auto rounded-box"
 		>
 			{#each filteredPayees as p}
-				<button
-					type="button"
-					onclick={() => handleSelectPayee(p)}
-					class="w-full text-left px-4 py-2 hover:bg-primary hover:text-primary-content text-sm transition-colors"
-				>
-					{p}
-				</button>
+				<li><button type="button" onclick={() => handleSelectPayee(p)}>{p}</button></li>
 			{/each}
-		</div>
+		</ul>
 	{/if}
 
 	<!-- Click-outside backstop to close dropdown -->
 	{#if payeeDropdownOpen}
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<!-- biome-ignore lint/a11y/noStaticElementInteractions: overlay dismisser -->
-		<!-- biome-ignore lint/a11y/useKeyWithClickEvents: overlay dismisser -->
-		<div
-			class="fixed inset-0 z-10"
+		<button
+			type="button"
+			class="fixed inset-0 z-10 cursor-default bg-transparent w-full h-full border-none"
 			onclick={() => {
 				if (payeeSearch.trim() && !selectedPayee) {
 					selectedPayee = payeeSearch.trim();
 				}
 				payeeDropdownOpen = false;
 			}}
-		></div>
+			aria-label="Close dropdown"
+		></button>
 	{/if}
-</div>
+</fieldset>

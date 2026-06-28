@@ -24,11 +24,9 @@ onMount(() => {
 <div class="min-h-screen bg-base-300 flex flex-col pb-12 safe-bottom">
 	<Header {user} />
 	<main class="flex-1 flex items-center justify-center p-4">
-		<div class="card w-full max-w-lg bg-base-100 shadow-xl border border-base-200">
-			<div class="card-body p-6 sm:p-8">
-				<ExpenseForm />
-			</div>
-		</div>
+		<section class="card card-body w-full max-w-lg bg-base-100 border border-base-200 rounded-box">
+			<ExpenseForm />
+		</section>
 	</main>
 	<PwaInstallPrompt bind:show={showInstallPrompt} />
 </div>
