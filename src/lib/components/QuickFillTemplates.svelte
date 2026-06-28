@@ -1,7 +1,7 @@
 <script lang="ts">
 import { page } from "$app/state";
 import type { ExpenseTemplate, FormState } from "$lib/schemas";
-import { SAVED_TEMPLATES } from "$lib/templates";
+import { templatesStore } from "$lib/store/templates.svelte";
 import TemplateDropdown from "./TemplateDropdown.svelte";
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 let { form = $bindable() }: Props = $props();
 
-const templates = SAVED_TEMPLATES;
+const templates = $derived(templatesStore.all);
 const showHybrid = $derived(templates.length > 4);
 
 const quickTemplates = $derived(
