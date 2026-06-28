@@ -13,18 +13,18 @@
 	<!-- Payment Mode Placeholder -->
 	<div class="space-y-1">
 		<div class="h-3 bg-base-200 rounded w-28"></div>
-		<div class="h-14 bg-base-200 rounded-lg w-full"></div>
+		<div class="h-14 bg-base-200 rounded-(--rounded-btn) w-full"></div>
 	</div>
 	<!-- What did you buy Placeholder -->
 	<div class="space-y-1">
 		<div class="h-3 bg-base-200 rounded w-36"></div>
-		<div class="h-14 bg-base-200 rounded-lg w-full"></div>
+		<div class="h-14 bg-base-200 rounded-(--rounded-btn) w-full"></div>
 	</div>
 	<!-- Category Placeholder -->
 	<div class="space-y-1">
 		<div class="h-3 bg-base-200 rounded w-20"></div>
-		<div class="h-14 bg-base-200 rounded-lg w-full"></div>
+		<div class="h-14 bg-base-200 rounded-(--rounded-btn) w-full"></div>
 	</div>
 	<!-- Submit Button Placeholder -->
-	<div class="h-14 bg-base-200 rounded-lg w-full mt-6"></div>
+	<div class="h-14 bg-base-200 rounded-(--rounded-btn) w-full mt-6"></div>
 </div>

@@ -75,10 +75,13 @@ function handleCreateCategory() {
 	{/if}
 
 	{#if categoryDropdownOpen}
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<!-- biome-ignore lint/a11y/noStaticElementInteractions: overlay dismisser -->
-		<!-- biome-ignore lint/a11y/useKeyWithClickEvents: overlay dismisser -->
-		<div class="fixed inset-0 z-10" onclick={() => { categoryDropdownOpen = false; }}></div>
+		<button
+			type="button"
+			class="fixed inset-0 z-10 cursor-default bg-transparent w-full h-full border-none"
+			onclick={() => {
+				categoryDropdownOpen = false;
+			}}
+			aria-label="Dismiss menu"
+		></button>
 	{/if}
 </fieldset>

@@ -12,7 +12,7 @@ import Icon from "$lib/components/Icon.svelte";
 			<div class="card-body p-8 sm:p-10 flex flex-col items-center">
 				<!-- App Logo / Icon -->
 				<span
-					class="w-16 h-16 rounded-btn bg-primary text-primary-content flex items-center justify-center mb-6"
+					class="w-16 h-16 rounded-(--rounded-btn) bg-primary text-primary-content flex items-center justify-center mb-6"
 					aria-hidden="true"
 				>
 					<Icon name="rupee" class="size-9" />

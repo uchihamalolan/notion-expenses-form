@@ -1,21 +1,19 @@
 /// <reference types="@sveltejs/kit" />
+/** biome-ignore-all lint/suspicious/noExplicitAny: self typing is complex */
 import { build, files, version } from "$service-worker";
 
 const CACHE_NAME = `cache-${version}`;
 const ASSETS = [...build, ...files];
 
-// biome-ignore lint/suspicious/noExplicitAny: self typing in service worker is complex
 self.addEventListener("install", (event: any) => {
 	event.waitUntil(
 		caches
 			.open(CACHE_NAME)
 			.then((cache) => cache.addAll(ASSETS))
-			// biome-ignore lint/suspicious/noExplicitAny: self typing is complex
 			.then(() => (self as any).skipWaiting()),
 	);
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: self typing in service worker is complex
 self.addEventListener("activate", (event: any) => {
 	event.waitUntil(
 		caches.keys().then(async (keys) => {
@@ -24,13 +22,11 @@ self.addEventListener("activate", (event: any) => {
 					await caches.delete(key);
 				}
 			}
-			// biome-ignore lint/suspicious/noExplicitAny: self typing is complex
 			await (self as any).clients.claim();
 		}),
 	);
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: self typing in service worker is complex
 self.addEventListener("fetch", (event: any) => {
 	// Skip non-GET requests and requests to external APIs (like Notion or GitHub OAuth)
 	if (event.request.method !== "GET" || !event.request.url.startsWith(self.location.origin)) {
