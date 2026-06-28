@@ -36,7 +36,7 @@ This workspace contains a Svelte 5 / SvelteKit project for a Notion Expense Trac
 
 ### 5. Personal Coding & Design Guidelines
 - **Strict Theme Respect:** Do not override active theme attributes (colors, text weights, hover behaviors) with custom Tailwind utility overrides. Let the active theme resolve color and contrast natively.
-- **Themed Geometry:** Use native themed border-radius tokens (`rounded-box`, `rounded-[var(--rounded-btn)]`) instead of hardcoded utility classes (`rounded-2xl`, `rounded-3xl`) to prevent visual mismatches when toggling themes.
+- **Themed Geometry:** Use native themed border-radius tokens (`rounded-box`, `rounded-(--rounded-btn)`) instead of hardcoded utility classes (`rounded-2xl`, `rounded-3xl`) to prevent visual mismatches when toggling themes.
 - **Layout & HTML Minimalism:** Consolidate styles and eliminate redundant wrapper divs. If an element's only child is the content wrapper, apply layout and padding directly to the parent tag to keep the DOM hierarchy flat.
 - **Semantic Tagging:** Prioritize semantic HTML5 elements over generic `div` containers:
   - `<aside>` for floating overlay alerts, modal prompts, and toast notifications.
