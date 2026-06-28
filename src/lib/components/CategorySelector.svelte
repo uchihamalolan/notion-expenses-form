@@ -9,101 +9,84 @@ interface Props {
 let { selectedCategories = $bindable(), availableCategories = $bindable() }: Props = $props();
 
 let categorySearch = $state("");
-let detailsOpen = $state(false);
+let categoryDropdownOpen = $state(false);
 
 const filteredCategories = $derived(
-	availableCategories.filter((cat) => cat.toLowerCase().includes(categorySearch.toLowerCase())),
+	availableCategories.filter(
+		(cat) =>
+			cat.toLowerCase().includes(categorySearch.toLowerCase()) && !selectedCategories.includes(cat),
+	),
 );
 
-function toggleCategory(cat: string) {
-	if (selectedCategories.includes(cat)) {
-		selectedCategories = selectedCategories.filter((c) => c !== cat);
-	} else {
+function addCategory(cat: string) {
+	if (!selectedCategories.includes(cat)) {
 		selectedCategories = [...selectedCategories, cat];
 	}
+	categorySearch = "";
+	categoryDropdownOpen = false;
+}
+
+function removeCategory(cat: string) {
+	selectedCategories = selectedCategories.filter((c) => c !== cat);
 }
 
 function handleCreateCategory() {
 	const newCat = categorySearch.trim().toLowerCase();
-	if (newCat && !availableCategories.includes(newCat)) {
-		availableCategories = [...availableCategories, newCat].sort();
-		toggleCategory(newCat);
-		categorySearch = "";
+	if (newCat) {
+		if (!availableCategories.includes(newCat)) {
+			availableCategories = [...availableCategories, newCat].sort();
+		}
+		addCategory(newCat);
 	}
 }
 </script>
 
-<div class="relative w-full flex flex-col gap-2">
-	<!-- Hidden inputs for Form Action -->
+<div class="relative">
+	<!-- Hidden inputs for SvelteKit Form Action -->
 	{#each selectedCategories as cat (cat)}
 		<input type="hidden" name="category" value={cat}>
 	{/each}
 
-	<details class="dropdown w-full" bind:open={detailsOpen}>
-		<summary class="btn btn-outline w-full justify-between rounded-(--rounded-btn)">
-			<span>Categories ({selectedCategories.length})</span>
-		</summary>
-		<section
-			class="dropdown-content bg-base-100 rounded-box z-30 mt-1 w-full p-4 shadow-lg border border-base-200 flex flex-col gap-3"
+	<label class="label" for="category-search">CATEGORIES</label>
+
+	<!-- <search> is the HTML5 semantic landmark for search/filter UI -->
+	<search class="join w-full">
+		<input
+			id="category-search"
+			type="text"
+			placeholder="Search or type a category..."
+			bind:value={categorySearch}
+			onfocus={() => (categoryDropdownOpen = true)}
+			class="input input-lg join-item w-full"
+			autocomplete="off"
 		>
-			<search class="join w-full">
-				<input
-					type="text"
-					placeholder="Search or type a category..."
-					aria-label="Search categories"
-					bind:value={categorySearch}
-					class="input input-sm join-item w-full"
-					autocomplete="off"
-				>
-				{#if categorySearch && !availableCategories.includes(categorySearch.trim().toLowerCase())}
-					<button
-						type="button"
-						onclick={handleCreateCategory}
-						class="btn btn-primary btn-sm join-item"
-					>
-						+ New
-					</button>
-				{/if}
-			</search>
-			<ul class="menu menu-sm p-0 overflow-y-auto max-h-48 flex flex-col gap-1">
-				{#each filteredCategories as cat (cat)}
-					<li>
-						<!-- biome-ignore lint/a11y/noLabelWithoutControl: Label is dynamically associated with checkbox using ID -->
-						<label
-							for="cat-{cat}"
-							class="flex items-center gap-2 p-2 rounded-(--rounded-btn) cursor-pointer select-none"
-						>
-							<input
-								id="cat-{cat}"
-								type="checkbox"
-								checked={selectedCategories.includes(cat)}
-								onchange={() => toggleCategory(cat)}
-								class="checkbox checkbox-sm checkbox-primary"
-							>
-							<span class="capitalize">{cat}</span>
-						</label>
-					</li>
-				{/each}
-				{#if filteredCategories.length === 0}
-					<li class="disabled p-2 text-center text-xs opacity-50">No categories found</li>
-					{#if categorySearch && !availableCategories.includes(categorySearch.trim().toLowerCase())}
-						<li class="p-2 text-center text-xs opacity-75">
-							Click "+ New" to add "{categorySearch}"
-						</li>
-					{/if}
-				{/if}
-			</ul>
-		</section>
-	</details>
+		{#if categorySearch && !availableCategories.includes(categorySearch.trim().toLowerCase())}
+			<button type="button" onclick={handleCreateCategory} class="btn btn-primary btn-lg join-item">
+				+ New
+			</button>
+		{/if}
+	</search>
 
-	<CategoryBadges {selectedCategories} onRemove={toggleCategory} />
+	<CategoryBadges {selectedCategories} onRemove={removeCategory} />
+
+	{#if categoryDropdownOpen && filteredCategories.length > 0}
+		<ul
+			class="menu menu-sm bg-base-200 absolute z-20 w-full top-full mt-1 max-h-48 overflow-y-auto rounded-box"
+		>
+			{#each filteredCategories as cat (cat)}
+				<li><button type="button" onclick={() => addCategory(cat)}>{cat}</button></li>
+			{/each}
+		</ul>
+	{/if}
+
+	{#if categoryDropdownOpen}
+		<button
+			type="button"
+			class="fixed inset-0 z-10 cursor-default bg-transparent w-full h-full border-none"
+			onclick={() => {
+				categoryDropdownOpen = false;
+			}}
+			aria-label="Dismiss menu"
+		></button>
+	{/if}
 </div>
-
-{#if detailsOpen}
-	<button
-		type="button"
-		class="fixed inset-0 z-20 cursor-default bg-transparent w-full h-full border-none"
-		onclick={() => (detailsOpen = false)}
-		aria-label="Close categories list"
-	></button>
-{/if}

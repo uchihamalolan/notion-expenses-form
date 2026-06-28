@@ -11,7 +11,7 @@ let { user }: Props = $props();
 <header class="navbar bg-base-100 px-4 border-b border-base-200">
 	<div class="flex-1 flex items-center gap-2">
 		<span
-			class="w-8 h-8 rounded-(--rounded-btn) bg-primary text-primary-content flex items-center justify-center font-bold text-lg"
+			class="w-8 h-8 rounded-btn bg-primary text-primary-content flex items-center justify-center font-bold text-lg"
 			aria-hidden="true"
 		>
 			₹

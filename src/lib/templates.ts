@@ -3,7 +3,7 @@ import type { ExpenseTemplate } from "./schemas";
 export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	{
 		id: "swiggy-lunch",
-		label: "Swiggy Lunch 🍜",
+		label: "Swiggy Lunch",
 		pinned: true,
 		name: "Swiggy Lunch",
 		amount: 350,
@@ -13,7 +13,7 @@ export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	},
 	{
 		id: "uber-office",
-		label: "Uber Cab 🚗",
+		label: "Uber Cab",
 		pinned: true,
 		name: "Uber Cab",
 		amount: 250,
@@ -23,7 +23,7 @@ export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	},
 	{
 		id: "act-internet",
-		label: "ACT Internet 🌐",
+		label: "ACT Internet",
 		pinned: true,
 		name: "Internet Bill",
 		amount: 1050,
@@ -33,7 +33,7 @@ export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	},
 	{
 		id: "rent",
-		label: "Rent 🏠",
+		label: "Rent",
 		name: "Monthly Rent",
 		amount: 20000,
 		category: ["rent"],
@@ -42,7 +42,7 @@ export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	},
 	{
 		id: "starbucks",
-		label: "Starbucks Coffee ☕",
+		label: "Starbucks Coffee",
 		name: "Starbucks Coffee",
 		amount: 320,
 		category: ["food"],
@@ -51,7 +51,7 @@ export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	},
 	{
 		id: "groceries",
-		label: "Amazon Fresh 🥦",
+		label: "Amazon Fresh",
 		name: "Groceries",
 		amount: 1500,
 		category: ["groceries"],
@@ -60,7 +60,7 @@ export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	},
 	{
 		id: "netflix",
-		label: "Netflix Subscription 🎬",
+		label: "Netflix Subscription",
 		name: "Netflix",
 		amount: 649,
 		category: ["entertainment"],
@@ -69,7 +69,7 @@ export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	},
 	{
 		id: "spotify",
-		label: "Spotify 🎵",
+		label: "Spotify",
 		name: "Spotify",
 		amount: 119,
 		category: ["entertainment"],
@@ -78,7 +78,7 @@ export const SAVED_TEMPLATES: ExpenseTemplate[] = [
 	},
 	{
 		id: "petrol",
-		label: "Shell Petrol ⛽",
+		label: "Shell Petrol",
 		name: "Petrol",
 		amount: 1000,
 		category: ["fuel"],

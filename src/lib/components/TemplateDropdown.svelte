@@ -33,7 +33,7 @@ function handleSelect(template: ExpenseTemplate) {
 		More ({templates.length})
 	</summary>
 	<section
-		class="dropdown-content bg-base-100 rounded-box z-30 mt-1 w-72 p-3 shadow-lg border border-base-200 flex flex-col gap-2"
+		class="dropdown-content bg-base-100 rounded-box z-30 mt-1 w-80 p-4 shadow-xl border border-base-200 flex flex-col gap-3"
 	>
 		<search class="w-full">
 			<input
@@ -41,35 +41,37 @@ function handleSelect(template: ExpenseTemplate) {
 				placeholder="Search templates..."
 				aria-label="Search templates"
 				bind:value={searchQuery}
-				class="input input-sm w-full"
+				class="input input-sm input-bordered w-full rounded-btn"
 				autocomplete="off"
 			>
 		</search>
-		<ul class="menu menu-sm p-0 overflow-y-auto max-h-56 flex flex-col gap-1">
+		<ul class="overflow-y-auto max-h-72 flex flex-col gap-2.5 w-full pr-1">
 			{#each filteredTemplates as template (template.id)}
 				<li>
 					<button
 						type="button"
 						onclick={() => handleSelect(template)}
-						class="btn btn-soft p-2 flex flex-col items-start gap-2"
+						class="w-full text-left p-3 bg-base-200 hover:bg-base-300 border border-base-300 hover:border-base-content/20 rounded-btn transition-all duration-150 flex flex-col gap-1.5 cursor-pointer"
 					>
 						<div class="flex items-center justify-between w-full">
-							<strong>{template.label}</strong>
+							<strong class="font-bold text-sm text-base-content">{template.label}</strong>
 							{#if template.amount !== undefined && template.amount !== null}
 								<span class="text-xs font-mono font-bold">₹{template.amount}</span>
 							{/if}
 						</div>
-						<small class="flex flex-wrap gap-1 opacity-60">
+						<small class="flex flex-wrap gap-1.5 items-center opacity-70">
 							{#if template.category}
 								{#each template.category as cat (cat)}
-									<span class="badge badge-outline badge-xs">{cat}</span>
+									<span class="badge badge-outline badge-xs capitalize">{cat}</span>
 								{/each}
 							{/if}
 							{#if template.payee}
-								<span>• {template.payee}</span>
+								<span class="text-base-content/30 text-[9px]">•</span>
+								<span>{template.payee}</span>
 							{/if}
 							{#if template.paymentMode}
-								<span>• {template.paymentMode}</span>
+								<span class="text-base-content/30 text-[9px]">•</span>
+								<span>{template.paymentMode}</span>
 							{/if}
 						</small>
 					</button>

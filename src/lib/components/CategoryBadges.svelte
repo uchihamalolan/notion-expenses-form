@@ -15,7 +15,7 @@ let { selectedCategories, onRemove }: Props = $props();
 				<button
 					type="button"
 					onclick={() => onRemove(cat)}
-					class="btn btn-ghost btn-xs btn-circle"
+					class="hover:bg-secondary-content/20 rounded-full w-4 h-4 flex items-center justify-center transition-colors text-[10px] leading-none border-none cursor-pointer bg-transparent opacity-70 hover:opacity-100"
 					aria-label="Remove category {cat}"
 				>
 					✕

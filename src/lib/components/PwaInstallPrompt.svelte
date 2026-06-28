@@ -15,7 +15,7 @@ let { show = $bindable() }: Props = $props();
 		<header class="flex justify-between items-start">
 			<div class="flex gap-3 items-center">
 				<span
-					class="w-10 h-10 rounded-(--rounded-btn) bg-primary text-primary-content flex items-center justify-center font-bold text-xl"
+					class="w-10 h-10 rounded-btn bg-primary text-primary-content flex items-center justify-center font-bold text-xl"
 					aria-hidden="true"
 				>
 					₹

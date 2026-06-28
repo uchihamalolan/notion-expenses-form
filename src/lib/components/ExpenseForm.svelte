@@ -1,4 +1,5 @@
 <script lang="ts">
+import { untrack } from "svelte";
 import type { FormState, NotionSchema } from "$lib/schemas";
 import ExpenseFormFields from "./ExpenseFormFields.svelte";
 import FormSkeleton from "./FormSkeleton.svelte";
@@ -34,15 +35,17 @@ const loading = $derived(!schema);
 
 $effect(() => {
 	if (schema) {
-		availableCategories = [...schema.categories];
-		availablePayees = [...schema.payees];
-		availablePaymentModes = [...schema.paymentModes];
+		untrack(() => {
+			availableCategories = [...schema.categories];
+			availablePayees = [...schema.payees];
+			availablePaymentModes = [...schema.paymentModes];
 
-		if (availablePaymentModes.length > 0 && !form.selectedPaymentMode) {
-			form.selectedPaymentMode = availablePaymentModes.includes("HDFC")
-				? "HDFC"
-				: availablePaymentModes[0];
-		}
+			if (availablePaymentModes.length > 0 && !form.selectedPaymentMode) {
+				form.selectedPaymentMode = availablePaymentModes.includes("HDFC")
+					? "HDFC"
+					: availablePaymentModes[0];
+			}
+		});
 	}
 });
 </script>

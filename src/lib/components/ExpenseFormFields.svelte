@@ -63,65 +63,64 @@ const handleEnhance: SubmitFunction = () => {
 
 	<fieldset class="fieldset bg-base-100 rounded-box gap-6">
 		<!-- Payment mode + date share a row -->
-		<div class="grid grid-cols-2 gap-4">
-			<label class="floating-label">
-				<span>Payment Mode *</span>
+		<div class="grid grid-cols-2 gap-4 w-full">
+			<div>
+				<label class="label" for="payment-mode">PAYMENT MODE *</label>
 				<select
 					id="payment-mode"
 					name="paymentMode"
 					bind:value={form.selectedPaymentMode}
 					required
-					class="select select-lg"
+					class="select select-lg w-full"
 				>
 					<option disabled value=""></option>
 					{#each availablePaymentModes as mode (mode)}
 						<option value={mode}>{mode}</option>
 					{/each}
 				</select>
-			</label>
+			</div>
 
-			<label class="floating-label">
-				<span>Date *</span>
+			<div>
+				<label class="label" for="expense-date">DATE *</label>
 				<input
 					id="expense-date"
 					name="date"
 					type="date"
-					placeholder="Date"
 					bind:value={form.date}
 					required
-					class="input input-lg"
+					class="input input-lg w-full"
 				>
-			</label>
+			</div>
 		</div>
 
-		<label class="floating-label">
-			<span>What did you buy? *</span>
+		<div class="w-full">
+			<label class="label" for="expense-name">WHAT DID YOU BUY? *</label>
 			<input
 				id="expense-name"
 				name="name"
 				type="text"
-				placeholder="What did you buy?"
+				placeholder="e.g. Swiggy Lunch"
 				bind:value={form.name}
 				required
 				class="input input-lg w-full"
 			>
-		</label>
+		</div>
 
 		<CategorySelector bind:selectedCategories={form.selectedCategories} bind:availableCategories />
 
 		<PayeeSelector bind:selectedPayee={form.selectedPayee} bind:availablePayees />
 
-		<label class="floating-label">
-			<span>Notes</span>
+		<div class="w-full">
+			<label class="label" for="notes">NOTES</label>
 			<textarea
 				id="notes"
 				name="notes"
-				placeholder="Notes"
+				placeholder="Add extra context..."
 				bind:value={form.notes}
 				rows="2"
 				class="textarea textarea-lg w-full"
 			></textarea>
-		</label>
+		</div>
 	</fieldset>
 
 	<button type="submit" disabled={submitting} class="btn btn-primary btn-lg btn-block mt-4">

@@ -13,7 +13,7 @@ const filteredPayees = $derived(
 	availablePayees.filter((p) => p.toLowerCase().includes(payeeSearch.toLowerCase())),
 );
 
-// Sync search input if selectedPayee changes externally
+// Sync search input if selectedPayee changes externally (e.g. from template or reset)
 $effect(() => {
 	payeeSearch = selectedPayee;
 });
@@ -35,7 +35,11 @@ function handleCreatePayee() {
 </script>
 
 <div class="relative">
+	<!-- Hidden input to submit the payee value with SvelteKit Form Actions -->
+	<input type="hidden" name="payee" value={selectedPayee}>
+
 	<label class="label" for="payee">PAYEE / MERCHANT</label>
+
 	<!-- <search> is the HTML5 semantic landmark for search/filter UI -->
 	<search class="join w-full">
 		<input
@@ -43,11 +47,12 @@ function handleCreatePayee() {
 			type="text"
 			placeholder="Search or type a payee..."
 			bind:value={payeeSearch}
+			oninput={() => { selectedPayee = payeeSearch.trim(); }}
 			onfocus={() => (payeeDropdownOpen = true)}
 			class="input input-lg join-item w-full"
 			autocomplete="off"
 		>
-		{#if payeeSearch && !availablePayees.includes(payeeSearch)}
+		{#if payeeSearch && !availablePayees.includes(payeeSearch.trim())}
 			<button type="button" onclick={handleCreatePayee} class="btn btn-primary btn-lg join-item">
 				+ New
 			</button>
@@ -59,7 +64,7 @@ function handleCreatePayee() {
 		<ul
 			class="menu menu-sm bg-base-200 absolute z-20 w-full top-full mt-1 max-h-48 overflow-y-auto rounded-box"
 		>
-			{#each filteredPayees as p}
+			{#each filteredPayees as p (p)}
 				<li><button type="button" onclick={() => handleSelectPayee(p)}>{p}</button></li>
 			{/each}
 		</ul>
@@ -70,12 +75,7 @@ function handleCreatePayee() {
 		<button
 			type="button"
 			class="fixed inset-0 z-10 cursor-default bg-transparent w-full h-full border-none"
-			onclick={() => {
-				if (payeeSearch.trim() && !selectedPayee) {
-					selectedPayee = payeeSearch.trim();
-				}
-				payeeDropdownOpen = false;
-			}}
+			onclick={() => (payeeDropdownOpen = false)}
 			aria-label="Close dropdown"
 		></button>
 	{/if}

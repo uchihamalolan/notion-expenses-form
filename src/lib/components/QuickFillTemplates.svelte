@@ -46,7 +46,7 @@ function applyTemplate(template: ExpenseTemplate) {
 			<button
 				type="button"
 				onclick={() => applyTemplate(template)}
-				class="btn btn-outline btn-md rounded-(--rounded-btn)"
+				class="btn btn-outline btn-md rounded-btn"
 			>
 				{template.label}
 			</button>
