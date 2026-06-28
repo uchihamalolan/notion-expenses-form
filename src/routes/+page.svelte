@@ -7,6 +7,7 @@ import PwaInstallPrompt from "$lib/components/PwaInstallPrompt.svelte";
 
 let showInstallPrompt = $state(false);
 const user = $derived(page.data.user);
+const schema = $derived(page.data.schema);
 
 onMount(() => {
 	const isIOS =
@@ -21,12 +22,18 @@ onMount(() => {
 });
 </script>
 
+<svelte:head>
+	<title>Log Expense - Notion Expenses Tracker</title>
+	<meta
+		name="description"
+		content="Log and track your daily expenses quickly and sync them directly to your Notion database."
+	>
+</svelte:head>
+
 <div class="min-h-screen bg-base-300 flex flex-col pb-12 safe-bottom">
 	<Header {user} />
-	<main class="flex-1 flex items-center justify-center p-4">
-		<section class="card card-body max-w-lg bg-base-100 border border-base-200 rounded-box">
-			<ExpenseForm />
-		</section>
+	<main class="p-4 mx-auto w-full max-w-lg">
+		<ExpenseForm {schema} />
 	</main>
 	<PwaInstallPrompt bind:show={showInstallPrompt} />
 </div>

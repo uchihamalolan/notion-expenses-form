@@ -1,6 +1,6 @@
 <script lang="ts">
 interface Props {
-	name: "rupee" | "github" | "success" | "error" | "share" | "sun" | "moon";
+	name: "rupee" | "github" | "success" | "error" | "share" | "sun" | "moon" | "zap";
 	class?: string;
 }
 
@@ -101,5 +101,19 @@ let { name, class: className = "w-6 h-6" }: Props = $props();
 	>
 		<title>Moon</title>
 		<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+	</svg>
+{:else if name === "zap"}
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		class={className}
+		fill="none"
+		viewBox="0 0 24 24"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	>
+		<title>Zap</title>
+		<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
 	</svg>
 {/if}

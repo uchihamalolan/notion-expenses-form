@@ -1,90 +1,131 @@
 <script lang="ts">
-import type { ExpenseFormState } from "$lib/expense.svelte";
+import type { SubmitFunction } from "@sveltejs/kit";
+import { enhance } from "$app/forms";
+import type { FormState } from "$lib/schemas";
 import AmountInput from "./AmountInput.svelte";
 import CategorySelector from "./CategorySelector.svelte";
 import PayeeSelector from "./PayeeSelector.svelte";
 
 interface Props {
-	state: ExpenseFormState;
+	form: FormState;
+	submitting: boolean;
+	statusMessage: { type: "success" | "error"; text: string } | null;
+	availableCategories: string[];
+	availablePayees: string[];
+	availablePaymentModes: string[];
 }
 
-let { state = $bindable() }: Props = $props();
+let {
+	form = $bindable(),
+	submitting = $bindable(),
+	statusMessage = $bindable(),
+	availableCategories = $bindable(),
+	availablePayees = $bindable(),
+	availablePaymentModes = $bindable(),
+}: Props = $props();
+
+const handleEnhance: SubmitFunction = () => {
+	submitting = true;
+	statusMessage = null;
+
+	return async ({ result, update }) => {
+		submitting = false;
+
+		if (result.type === "success") {
+			statusMessage = { type: "success", text: "Expense recorded successfully!" };
+			form.name = "";
+			form.amount = null;
+			form.selectedCategories = [];
+			form.selectedPayee = "";
+			form.notes = "";
+			await update();
+			setTimeout(() => {
+				if (statusMessage?.type === "success") statusMessage = null;
+			}, 3000);
+		} else if (result.type === "failure") {
+			const data = result.data as { error?: string };
+			statusMessage = {
+				type: "error",
+				text: data?.error || "Failed to add expense",
+			};
+		} else if (result.type === "error") {
+			statusMessage = {
+				type: "error",
+				text: result.error?.message || "An unexpected error occurred",
+			};
+		}
+	};
+};
 </script>
 
-<form onsubmit={(e) => state.submit(e)} class="space-y-6">
-	<AmountInput bind:amount={state.amount} />
+<form method="POST" action="?/createExpense" use:enhance={handleEnhance} class="space-y-6">
+	<AmountInput bind:amount={form.amount} />
 
 	<fieldset class="fieldset bg-base-100 rounded-box gap-6">
-		<!-- <legend class="fieldset-legend text-sm font-bold px-2">Expense Details</legend> -->
-
 		<!-- Payment mode + date share a row -->
 		<div class="grid grid-cols-2 gap-4">
-			<div>
-				<label class="label" for="payment-mode">PAYMENT MODE *</label>
+			<label class="floating-label">
+				<span>Payment Mode *</span>
 				<select
 					id="payment-mode"
-					bind:value={state.selectedPaymentMode}
+					name="paymentMode"
+					bind:value={form.selectedPaymentMode}
 					required
 					class="select select-lg"
 				>
-					{#each state.availablePaymentModes as mode (mode)}
+					<option disabled value=""></option>
+					{#each availablePaymentModes as mode (mode)}
 						<option value={mode}>{mode}</option>
 					{/each}
 				</select>
-			</div>
+			</label>
 
-			<div>
-				<label class="label" for="expense-date">DATE *</label>
+			<label class="floating-label">
+				<span>Date *</span>
 				<input
 					id="expense-date"
+					name="date"
 					type="date"
-					bind:value={state.date}
+					placeholder="Date"
+					bind:value={form.date}
 					required
-					class="input input-lg "
+					class="input input-lg"
 				>
-			</div>
+			</label>
 		</div>
 
-		<div>
-			<label class="label" for="expense-name">WHAT DID YOU BUY? *</label>
+		<label class="floating-label">
+			<span>What did you buy? *</span>
 			<input
 				id="expense-name"
+				name="name"
 				type="text"
-				placeholder="e.g. Swiggy Lunch"
-				bind:value={state.name}
+				placeholder="What did you buy?"
+				bind:value={form.name}
 				required
 				class="input input-lg w-full"
 			>
-		</div>
+		</label>
 
-		<div>
-			<CategorySelector
-				bind:selectedCategories={state.selectedCategories}
-				bind:availableCategories={state.availableCategories}
-			/>
-		</div>
+		<CategorySelector bind:selectedCategories={form.selectedCategories} bind:availableCategories />
 
-		<div>
-			<PayeeSelector
-				bind:selectedPayee={state.selectedPayee}
-				bind:availablePayees={state.availablePayees}
-			/>
-		</div>
+		<PayeeSelector bind:selectedPayee={form.selectedPayee} bind:availablePayees />
 
-		<div>
-			<label class="label" for="notes">NOTES</label>
+		<label class="floating-label">
+			<span>Notes</span>
 			<textarea
 				id="notes"
-				placeholder="Add extra context..."
-				bind:value={state.notes}
+				name="notes"
+				placeholder="Notes"
+				bind:value={form.notes}
 				rows="2"
 				class="textarea textarea-lg w-full"
 			></textarea>
-		</div>
+		</label>
 	</fieldset>
 
-	<button type="submit" disabled={state.submitting} class="btn btn-primary btn-lg btn-block mt-4">
-		{#if state.submitting}
+	<button type="submit" disabled={submitting} class="btn btn-primary btn-lg btn-block mt-4">
+		{#if submitting}
 			<span class="loading loading-spinner"></span>Adding...
 		{:else}
 			Add Expense

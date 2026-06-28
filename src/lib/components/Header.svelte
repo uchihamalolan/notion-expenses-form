@@ -29,7 +29,7 @@ let { user }: Props = $props();
 				</summary>
 				<ul
 					tabindex="-1"
-					class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-2 w-32 p-2 shadow border border-base-200"
+					class="menu dropdown-content bg-base-100 rounded-box z-1 mt-2 w-32 p-2 shadow border border-base-200"
 				>
 					<li>
 						<a href="/logout" class="text-error"> Logout </a>
