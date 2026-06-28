@@ -46,7 +46,7 @@ This workspace contains a Svelte 5 / SvelteKit project for a Notion Expense Trac
   - `<ul>` and `<li>` for lists, options menus, and badge grids.
   - `<strong>` instead of styled spans for bold typographic emphasis.
   - `<button type="button">` with an `aria-label` for interactive overlay backdrops that dismiss menus.
-- **Zero Inline SVGs:** Individual Svelte components must never contain inline SVG elements. Register all SVG paths in [Icon.svelte](file:///Users/malolan/Projects/notion-expenses-form/src/lib/components/Icon.svelte) and reference them using `<Icon name="..." />`.
+- **Zero Inline SVGs:** Individual Svelte components must never contain inline SVG elements. Register all SVG paths in [Icon.svelte](../src/lib/components/Icon.svelte) and reference them using `<Icon name="..." />`.
 - **Accessibility (a11y):** Visually hide necessary structural labels using `sr-only` rather than omitting them entirely, ensuring complete screen-reader compatibility without affecting the visual design.
 
 ### 6. Incremental Coding & Breakdown Philosophy
@@ -107,5 +107,3 @@ The following Antigravity skills are highly relevant for the Notion Expense Trac
 ### 6. `diagnosing-bugs`
 - **When to use**: When the user reports unexpected behavior, runtime errors, or build issues.
 - **Why**: Helps execute a robust diagnosis loop to safely identify root causes.
-
-

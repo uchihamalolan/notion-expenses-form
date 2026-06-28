@@ -45,7 +45,7 @@ Analyze the code changes or target files along three distinct axes. Avoid duplic
   - Follow the workflow in [svelte-code-writer](file:///Users/malolan/.gemini/config/skills/svelte-code-writer/SKILL.md) to query documentation or trace reactivity.
 
 ### Axis B: Local Design & A11y Guidelines (Strict)
-These local guidelines from [AGENTS.md](file:///Users/malolan/Projects/notion-expenses-form/.agents/AGENTS.md) must be strictly enforced:
+These local guidelines from [AGENTS.md](../../AGENTS.md) must be strictly enforced:
 
 - **`theme-respect`**: Do NOT override active theme attributes (colors, text weights, hover behaviors) with custom Tailwind utility overrides. Let the active theme resolve color and contrast natively.
 - **`themed-geometry`**: Use native themed border-radius tokens (`rounded-box`, `rounded-(--rounded-btn)`) instead of hardcoded utility classes (`rounded-2xl`, `rounded-3xl`).
@@ -58,7 +58,7 @@ These local guidelines from [AGENTS.md](file:///Users/malolan/Projects/notion-ex
   - `<ul>` and `<li>` for lists, options menus, and badge grids.
   - `<strong>` instead of styled spans for bold typographic emphasis.
   - `<button type="button">` with `aria-label` for interactive overlay backdrops that dismiss menus.
-- **`zero-inline-svg`**: Svelte components must never contain inline SVG elements. Register all SVG paths in [Icon.svelte](file:///Users/malolan/Projects/notion-expenses-form/src/lib/components/Icon.svelte) and reference them using `<Icon name="..." />`.
+- **`zero-inline-svg`**: Svelte components must never contain inline SVG elements. Register all SVG paths in [Icon.svelte](../../../src/lib/components/Icon.svelte) and reference them using `<Icon name="..." />`.
 - **`accessibility`**: Visually hide structural labels using `sr-only` rather than omitting them entirely, ensuring complete screen-reader compatibility without affecting the visual design.
 
 ### Axis C: Web Quality & Component Architecture
