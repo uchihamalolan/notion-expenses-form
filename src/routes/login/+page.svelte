@@ -4,6 +4,10 @@ import Icon from "$lib/components/Icon.svelte";
 
 <svelte:head>
 	<title>Login - Notion Expenses Tracker</title>
+	<meta
+		name="description"
+		content="Sign in with your GitHub account to access your Notion Expense Tracker."
+	>
 </svelte:head>
 
 <main class="hero min-h-screen bg-base-300">

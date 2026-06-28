@@ -12,6 +12,7 @@ let { amount = $bindable() }: Props = $props();
 		<span class="text-3xl font-extrabold text-primary mr-1" aria-hidden="true">₹</span>
 		<input
 			id="expense-amount"
+			name="amount"
 			type="number"
 			step="any"
 			placeholder="0.00"
