@@ -49,6 +49,13 @@ This workspace contains a Svelte 5 / SvelteKit project for a Notion Expense Trac
 - **Zero Inline SVGs:** Individual Svelte components must never contain inline SVG elements. Register all SVG paths in [Icon.svelte](file:///Users/malolan/Projects/notion-expenses-form/src/lib/components/Icon.svelte) and reference them using `<Icon name="..." />`.
 - **Accessibility (a11y):** Visually hide necessary structural labels using `sr-only` rather than omitting them entirely, ensuring complete screen-reader compatibility without affecting the visual design.
 
+### 6. Incremental Coding & Breakdown Philosophy
+- **Write Less Code (Incremental Delivery):** Minimize HTML tags, CSS classes, and JS logic written. Build features incrementally using progressive enhancement:
+  1. Implement the absolute minimum code to get the basic functionality working.
+  2. Once working, evaluate if anything more needs to be added.
+  3. Re-iterate step 2. At each iteration, further increase the level of scrutiny and justification required before adding any new code.
+- **Svelte File Line Limit (120 LOC):** Individual `.svelte` components must **never exceed 120 lines of code**. If a component is approaching or exceeds 120 LOC, break it down into smaller sub-components. (This is the *only* exception to writing less total code; a minor increase in overhead due to imports/setup is acceptable).
+
 ---
 
 ## Available Svelte MCP Tools
