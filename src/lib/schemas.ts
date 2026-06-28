@@ -54,3 +54,12 @@ export const formStateSchema = z.object({
 	notes: z.string(),
 });
 export type FormState = z.infer<typeof formStateSchema>;
+
+// ==========================================
+// 6. Template Form State (no date, adds label + pinned)
+// ==========================================
+export const templateFormStateSchema = formStateSchema.omit({ date: true }).extend({
+	label: z.string(),
+	pinned: z.boolean(),
+});
+export type TemplateFormState = z.infer<typeof templateFormStateSchema>;

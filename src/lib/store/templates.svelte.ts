@@ -1,4 +1,7 @@
-import type { ExpenseTemplate, FormState } from "../schemas";
+import type { ExpenseTemplate } from "../schemas";
+
+// Output: "7gX9pZ2wQa"
+const generateId = () => Math.random().toString(36).substring(2, 11);
 
 class TemplatesStore {
 	#templates = $state<ExpenseTemplate[]>([]);
@@ -25,7 +28,7 @@ class TemplatesStore {
 	save(template: Omit<ExpenseTemplate, "id">) {
 		const newTemplate: ExpenseTemplate = {
 			...template,
-			id: `custom-${Math.random().toString(36).substring(2, 9)}`,
+			id: generateId(),
 		};
 
 		const custom = this.getCustomTemplates();
@@ -35,24 +38,23 @@ class TemplatesStore {
 		this.#templates.push(newTemplate);
 	}
 
-	saveFromForm(form: FormState) {
-		this.save({
-			label: form.templateLabel.trim() || form.name.trim() || "Custom Template",
-			pinned: false,
-			name: form.name.trim(),
-			amount: form.amount ?? undefined,
-			category: [...form.selectedCategories],
-			payee: form.selectedPayee.trim(),
-			paymentMode: form.selectedPaymentMode,
-			notes: form.notes.trim(),
-		});
-	}
-
 	delete(id: string) {
 		const custom = this.getCustomTemplates().filter((t) => t.id !== id);
 		this.saveCustomTemplates(custom);
 
 		this.#templates = this.#templates.filter((t) => t.id !== id);
+	}
+
+	update(id: string, template: Omit<ExpenseTemplate, "id">) {
+		this.#templates = this.#templates.map((t) => {
+			if (t.id === id) {
+				return { ...template, id };
+			}
+			return t;
+		});
+
+		const custom = this.getCustomTemplates().map((ct) => (ct.id === id ? { ...template, id } : ct));
+		this.saveCustomTemplates(custom);
 	}
 
 	togglePin(id: string) {

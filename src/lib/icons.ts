@@ -69,4 +69,11 @@ export const ICON_DATA = {
 		strokeWidth: "2",
 		content: `<path d="M12 17v5M9 8v9h6V8M7 8h10M9 3h6" />`,
 	},
+	menu: {
+		viewBox: "0 0 24 24",
+		fill: "none",
+		stroke: "currentColor",
+		strokeWidth: "2",
+		content: `<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />`,
+	},
 };

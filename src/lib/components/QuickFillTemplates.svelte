@@ -58,4 +58,13 @@ function applyTemplate(template: ExpenseTemplate) {
 			<TemplateDropdown {templates} onSelect={applyTemplate} />
 		</li>
 	{/if}
+
+	<li>
+		<a
+			href="/templates"
+			class="btn btn-ghost border-dashed border-base-content/20 hover:border-primary btn-md rounded-btn gap-1"
+		>
+			+ Add Template
+		</a>
+	</li>
 </ul>

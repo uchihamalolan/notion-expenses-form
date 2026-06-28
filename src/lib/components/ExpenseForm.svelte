@@ -10,21 +10,18 @@ import QuickFillTemplates from "./QuickFillTemplates.svelte";
 
 let { schema }: { schema: NotionSchema } = $props();
 
-const getLocalDateString = () => {
-	const today = new Date();
-	const offset = today.getTimezoneOffset();
-	return new Date(today.getTime() - offset * 60 * 1000).toISOString().split("T")[0];
-};
-
 let availableCategories = $state<string[]>([]);
 let availablePayees = $state<string[]>([]);
 let availablePaymentModes = $state<string[]>([]);
+
+const getLocalDate = () =>
+	new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0];
 
 let form = $state<FormState>({
 	name: "",
 	amount: null,
 	selectedCategories: [],
-	date: getLocalDateString(),
+	date: getLocalDate(),
 	selectedPayee: "",
 	selectedPaymentMode: "",
 	notes: "",
@@ -44,8 +41,6 @@ onMount(() => {
 
 let submitting = $state(false);
 let statusMessage = $state<{ type: "success" | "error"; text: string } | null>(null);
-
-const loading = $derived(!schema);
 
 const handleEnhance: SubmitFunction = () => {
 	submitting = true;
@@ -79,11 +74,10 @@ const handleEnhance: SubmitFunction = () => {
 		}
 	};
 };
-
 const sectionStyle = "card card-body bg-base-100 border border-base-200 rounded-box";
 </script>
 
-{#if loading}
+{#if !schema}
 	<section class="{sectionStyle} w-full max-w-lg">
 		<FormSkeleton />
 	</section>
