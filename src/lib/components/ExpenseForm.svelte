@@ -1,5 +1,7 @@
 <script lang="ts">
-import { untrack } from "svelte";
+import type { SubmitFunction } from "@sveltejs/kit";
+import { onMount } from "svelte";
+import { enhance } from "$app/forms";
 import type { FormState, NotionSchema } from "$lib/schemas";
 import ExpenseFormFields from "./ExpenseFormFields.svelte";
 import FormSkeleton from "./FormSkeleton.svelte";
@@ -14,6 +16,10 @@ const getLocalDateString = () => {
 	return new Date(today.getTime() - offset * 60 * 1000).toISOString().split("T")[0];
 };
 
+let availableCategories = $state<string[]>([]);
+let availablePayees = $state<string[]>([]);
+let availablePaymentModes = $state<string[]>([]);
+
 let form = $state<FormState>({
 	name: "",
 	amount: null,
@@ -24,52 +30,80 @@ let form = $state<FormState>({
 	notes: "",
 });
 
-let availableCategories = $state<string[]>([]);
-let availablePayees = $state<string[]>([]);
-let availablePaymentModes = $state<string[]>([]);
+onMount(() => {
+	if (schema) {
+		availableCategories = [...schema.categories];
+		availablePayees = [...schema.payees];
+		availablePaymentModes = [...schema.paymentModes];
+
+		form.selectedPaymentMode = availablePaymentModes.includes("HDFC")
+			? "HDFC"
+			: availablePaymentModes[0] || "";
+	}
+});
 
 let submitting = $state(false);
 let statusMessage = $state<{ type: "success" | "error"; text: string } | null>(null);
 
 const loading = $derived(!schema);
 
-$effect(() => {
-	if (schema) {
-		untrack(() => {
-			availableCategories = [...schema.categories];
-			availablePayees = [...schema.payees];
-			availablePaymentModes = [...schema.paymentModes];
+const handleEnhance: SubmitFunction = () => {
+	submitting = true;
+	statusMessage = null;
 
-			if (availablePaymentModes.length > 0 && !form.selectedPaymentMode) {
-				form.selectedPaymentMode = availablePaymentModes.includes("HDFC")
-					? "HDFC"
-					: availablePaymentModes[0];
-			}
-		});
-	}
-});
+	return async ({ result, update }) => {
+		submitting = false;
+
+		if (result.type === "success") {
+			statusMessage = { type: "success", text: "Expense recorded successfully!" };
+			form.name = "";
+			form.amount = null;
+			form.selectedCategories = [];
+			form.selectedPayee = "";
+			form.notes = "";
+			await update();
+			setTimeout(() => {
+				if (statusMessage?.type === "success") statusMessage = null;
+			}, 3000);
+		} else if (result.type === "failure") {
+			const data = result.data as { error?: string };
+			statusMessage = {
+				type: "error",
+				text: data?.error || "Failed to add expense",
+			};
+		} else if (result.type === "error") {
+			statusMessage = {
+				type: "error",
+				text: result.error?.message || "An unexpected error occurred",
+			};
+		}
+	};
+};
+
+const sectionStyle = "card card-body bg-base-100 border border-base-200 rounded-box";
 </script>
 
 {#if loading}
-	<section class="card card-body bg-base-100 border border-base-200 rounded-box w-full max-w-lg">
+	<section class="{sectionStyle} w-full max-w-lg">
 		<FormSkeleton />
 	</section>
 {:else}
 	<div class="flex flex-col gap-4 w-full max-w-lg">
-		<section class="card card-body bg-base-100 border border-base-200 rounded-box p-4">
+		<section class="{sectionStyle} p-4">
 			<h2 class="text-xs font-bold opacity-60 tracking-wider uppercase mb-3">Quick Templates</h2>
 			<QuickFillTemplates bind:form />
 		</section>
 
-		<section class="card card-body bg-base-100 border border-base-200 rounded-box p-6">
-			<ExpenseFormFields
-				bind:form
-				bind:submitting
-				bind:statusMessage
-				bind:availableCategories
-				bind:availablePayees
-				bind:availablePaymentModes
-			/>
+		<section class="{sectionStyle} p-6">
+			<form method="POST" action="?/createExpense" use:enhance={handleEnhance} class="space-y-6">
+				<ExpenseFormFields
+					bind:form
+					{submitting}
+					bind:availableCategories
+					bind:availablePayees
+					bind:availablePaymentModes
+				/>
+			</form>
 		</section>
 	</div>
 {/if}

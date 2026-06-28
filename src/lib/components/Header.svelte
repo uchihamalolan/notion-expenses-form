@@ -11,7 +11,7 @@ let { user }: Props = $props();
 <header class="navbar bg-base-100 px-4 border-b border-base-200">
 	<div class="flex-1 flex items-center gap-2">
 		<span
-			class="w-8 h-8 rounded-btn bg-primary text-primary-content flex items-center justify-center font-bold text-lg"
+			class="w-8 h-8 rounded-full bg-primary text-primary-content place-center font-bold text-lg"
 			aria-hidden="true"
 		>
 			₹
@@ -23,13 +23,13 @@ let { user }: Props = $props();
 		{#if user}
 			<details class="dropdown dropdown-end">
 				<summary class="btn btn-ghost btn-circle avatar">
-					<div class="rounded-full w-10">
+					<div class="rounded-full w-8">
 						<img src="https://github.com/{user.username}.png" alt="{user.username}'s avatar">
 					</div>
 				</summary>
 				<ul
 					tabindex="-1"
-					class="menu dropdown-content bg-base-100 rounded-box z-1 mt-2 w-32 p-2 shadow border border-base-200"
+					class="menu dropdown-content bg-base-100 rounded-box z-20 mt-2 w-32 p-2 shadow border border-base-200"
 				>
 					<li>
 						<a href="/logout" class="text-error"> Logout </a>

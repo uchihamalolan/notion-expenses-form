@@ -82,7 +82,7 @@ function handleCreateCategory() {
 	{#if categoryDropdownOpen}
 		<button
 			type="button"
-			class="fixed inset-0 z-10 cursor-default bg-transparent w-full h-full border-none"
+			class="fixed inset-0 z-10 bg-transparent"
 			onclick={() => {
 				categoryDropdownOpen = false;
 			}}

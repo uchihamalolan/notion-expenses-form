@@ -51,7 +51,7 @@ function handleSelect(template: ExpenseTemplate) {
 					<button
 						type="button"
 						onclick={() => handleSelect(template)}
-						class="w-full text-left p-3 bg-base-200 hover:bg-base-300 border border-base-300 hover:border-base-content/20 rounded-btn transition-all duration-150 flex flex-col gap-1.5 cursor-pointer"
+						class="btn btn-soft w-full h-auto p-3 flex flex-col gap-1.5 items-start text-left font-normal"
 					>
 						<div class="flex items-center justify-between w-full">
 							<strong class="font-bold text-sm text-base-content">{template.label}</strong>
@@ -87,7 +87,7 @@ function handleSelect(template: ExpenseTemplate) {
 {#if isOpen}
 	<button
 		type="button"
-		class="fixed inset-0 z-20 cursor-default bg-transparent w-full h-full border-none"
+		class="fixed inset-0 z-20 bg-transparent"
 		onclick={() => (isOpen = false)}
 		aria-label="Close templates list"
 	></button>
