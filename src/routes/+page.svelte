@@ -24,7 +24,7 @@ onMount(() => {
 <div class="min-h-screen bg-base-300 flex flex-col pb-12 safe-bottom">
 	<Header {user} />
 	<main class="flex-1 flex items-center justify-center p-4">
-		<section class="card card-body w-full max-w-lg bg-base-100 border border-base-200 rounded-box">
+		<section class="card card-body max-w-lg bg-base-100 border border-base-200 rounded-box">
 			<ExpenseForm />
 		</section>
 	</main>

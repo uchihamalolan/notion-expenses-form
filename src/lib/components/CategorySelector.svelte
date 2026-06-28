@@ -41,8 +41,8 @@ function handleCreateCategory() {
 }
 </script>
 
-<fieldset class="fieldset w-full relative">
-	<legend class="fieldset-legend">CATEGORIES</legend>
+<div class="relative">
+	<label class="label" for="category-search">CATEGORIES</label>
 
 	<!-- <search> is the HTML5 semantic landmark for search/filter UI -->
 	<search class="join w-full">
@@ -84,4 +84,4 @@ function handleCreateCategory() {
 			aria-label="Dismiss menu"
 		></button>
 	{/if}
-</fieldset>
+</div>

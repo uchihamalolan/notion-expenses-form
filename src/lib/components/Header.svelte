@@ -21,7 +21,21 @@ let { user }: Props = $props();
 	<div class="flex-none flex items-center gap-2">
 		<ThemeToggle />
 		{#if user}
-			<a href="/logout" class="btn btn-ghost btn-sm text-error">Logout</a>
+			<details class="dropdown dropdown-end">
+				<summary class="btn btn-ghost btn-circle avatar">
+					<div class="rounded-full w-10">
+						<img src="https://github.com/{user.username}.png" alt="{user.username}'s avatar">
+					</div>
+				</summary>
+				<ul
+					tabindex="-1"
+					class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-2 w-32 p-2 shadow border border-base-200"
+				>
+					<li>
+						<a href="/logout" class="text-error"> Logout </a>
+					</li>
+				</ul>
+			</details>
 		{/if}
 	</div>
 </header>

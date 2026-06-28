@@ -34,8 +34,8 @@ function handleCreatePayee() {
 }
 </script>
 
-<fieldset class="fieldset relative">
-	<legend class="fieldset-legend">PAYEE / MERCHANT</legend>
+<div class="relative">
+	<label class="label" for="payee">PAYEE / MERCHANT</label>
 	<!-- <search> is the HTML5 semantic landmark for search/filter UI -->
 	<search class="join w-full">
 		<input
@@ -79,4 +79,4 @@ function handleCreatePayee() {
 			aria-label="Close dropdown"
 		></button>
 	{/if}
-</fieldset>
+</div>
