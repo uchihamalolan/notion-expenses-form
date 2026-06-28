@@ -9,9 +9,7 @@ export const load: PageServerLoad = async (event) => {
 	}
 
 	try {
-		console.time("get-schema");
 		const schema = await getNotionSchema();
-		console.timeEnd("get-schema");
 		return {
 			schema,
 		};
