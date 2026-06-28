@@ -1,6 +1,6 @@
 {
 	"name": "notion-expenses-form",
 	"compatibility_date": "2026-06-28",
-	"compatibility_flags": ["nodejs_als"],
+	"compatibility_flags": ["nodejs_als", "nodejs_compat"],
 	"pages_build_output_dir": ".svelte-kit/cloudflare"
 }
